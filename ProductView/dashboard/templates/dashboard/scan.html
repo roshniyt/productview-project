@@ -11,5 +11,44 @@
 <div id="scanner" style="width: 300px; margin-top: 20px;"></div>
 {%endblock%}
 {%block js%}
+<script>
+    let html5QrCode;
+    let isScanning = false;
+    document.getElementById("startScan").addEventListner("click", function(){
+        if(isScanning){
+            retuen;
+        }
+        html5QrCode = new Html5Qrcode("scanner");
+        const config ={
+            fps:10,
+            qrbox:250
+        };
+        isScanning = true;
+        html5QrCode.start(
+        { facingMode: "environment" },  // Use back camera (not front/selfie)
+        config,
+        (decodedText, decodedResult) => {
+            alert("Scanned Barcode: " + decodedText);
+            html5QrCode.stop().then(() => {
+                document.getElementById("scanner").innerHTML = ""; // Clear camera preview
+                isScanning = false;  // Scanner is now off
+            }).catch(err => {
+                console.error("Stop failed: ", err); // Handle any stop error
+                isScanning = false;
+            });
+        },
+
+        // 10. Error Callback: If scanner keeps trying but doesn't find barcode
+        (errorMessage) => {
+            console.warn("Scan error:", errorMessage); // This will repeat quietly until barcode is found
+        }
+
+    ).catch(err => {
+        console.error("Start failed: ", err); // If scanner fails to start
+        isScanning = false;
+    });
+}); 
+   
+</script>
 
 {%endblock%}
