@@ -222,7 +222,7 @@ h2{
     {% for i in hero %}
     <div class="container">
         <p>{{i.description}}<br><br>
-       <a href="{%url 'scan' %}" class="scan_btn">Start Scan</a> 
+       <a href="{%url 'scan' %}"  class="scan_btn">Start Scan</a> 
         </p>
          <img src="{{i.image.url}}" class="img-main">
      </div>
@@ -280,7 +280,7 @@ h2{
   </div>
 </div>
    {% comment %} footer end  {% endcomment %}
- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>  
+ 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
   </body>
 </html>

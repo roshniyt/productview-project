@@ -1,6 +1,15 @@
 {%extends "dashboard/basic.html" %}
 {% block title %}Scan{% endblock %}
 {%block css%}
+.btn{
+    margin-top:180px;
+    margin-left:120px;
+}
 {%endblock%}
 {%block body%}
+<button id="startScan" class="btn btn-success">Scan Product</button>
+<div id="scanner" style="width: 300px; margin-top: 20px;"></div>
+{%endblock%}
+{%block js%}
+
 {%endblock%}
