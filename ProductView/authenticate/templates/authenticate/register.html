@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <style>
+      body{
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding:0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+      .container{
+        width: 300px;
+        padding: 40px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+              
+      }
+      input{
+        width:100%;
+        padding: 10px;
+        border-radius:10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border:none;
+        background-color: #f0f0f0;
+
+      }
+  label{
+    font-weight:600;
+    
+  }
+  button{
+    background-color:rgb(32, 230, 197);
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: 50%;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 25%;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  button:hover{
+    background-color: rgb(36, 206, 178);
+  }
+  a{
+    text-decoration: none;
+    font-weight: 600;
+    color:black;
+  }
+  h1{
+    margin-bottom: 37px;
+  }
+  
+    </style>
+  </head>
+  <body>
+    {%  load static %}
+    <h1>Register</h1>
+    <div class="container">
+        <form method = 'POST'>
+          {% csrf_token %}
+            <label for="email">Email</label>
+            <input type="email" name="email" id= "email" placeholder="enter your email address" required> 
+            <label>username</label>
+            <input type="text" name="username" id="username" placeholder="create username" required>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password1" placeholder="create password" required>
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" name="confirm_password" id="password2" placeholder="conform password" required>
+            <button type="submit">Register</button>
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+       </form>
+    </div>
+  </body>
+</html>

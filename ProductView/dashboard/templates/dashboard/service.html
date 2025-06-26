@@ -1,0 +1,105 @@
+{%extends "dashboard/basic.html" %}
+{% block title %}Services{% endblock %}
+{%block css%}
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, white, rgb(26, 193, 165));
+      color: #333;
+    }
+
+    .services-container {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 40px;
+      margin-top:150px;
+      background-color: #ffffffdb;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .services-title {
+      text-align: center;
+      font-size: 36px;
+      color: rgb(26, 193, 165);
+      margin-bottom: 40px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-card h3 {
+      color: rgb(26, 193, 165);
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      .services-title {
+        font-size: 28px;
+      }
+
+      .services-container {
+        margin: 20px;
+        padding: 25px;
+        margin-top:100px;
+      }
+    }
+{% endblock %}
+{%block body%}
+ <div class="services-container">
+    <h1 class="services-title">Our Services</h1>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Barcode Scanning</h3>
+        <p>Scan product barcodes using your device camera to instantly retrieve ingredient and nutrition details.</p>
+      </div>
+      <div class="service-card">
+        <h3>Health Analysis</h3>
+        <p>Our system analyzes ingredients and nutritional values to determine if a product is healthy or not.</p>
+      </div>
+      <div class="service-card">
+        <h3>Product Comparison</h3>
+        <p>Scan multiple products at once and get a comparison based on health factors to find the best option.</p>
+      </div>
+      <div class="service-card">
+        <h3>Instant Suggestions</h3>
+        <p>Get real-time feedback on whether to consume a product, along with the reasons and alternatives.</p>
+      </div>
+      <div class="service-card">
+        <h3>History Tracking</h3>
+        <p>View your past scanned products and the health results, helping you keep track of your dietary choices.</p>
+      </div>
+      <div class="service-card">
+        <h3>Mobile-Friendly</h3>
+        <p>Access our platform on phones, tablets, laptops, and PCs for scanning on the go anytime, anywhere.</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

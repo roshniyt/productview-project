@@ -1,0 +1,83 @@
+{%extends "dashboard/basic.html" %}
+{% block title %}About Us{% endblock %}
+{%block css%}
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, white, rgb(26, 193, 165));
+      color: #333;
+    }
+
+    .about-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      margin-top:150px;
+      background-color: #ffffffd9;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .about-title {
+      text-align: center;
+      font-size: 36px;
+      color: rgb(26, 193, 165);
+      margin-bottom: 20px;
+    }
+
+    .about-content p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .highlight {
+      color: rgb(26, 193, 165);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        margin: 20px;
+        margin-top:100px;
+        padding: 30px;
+      }
+
+      .about-title {
+        font-size: 28px;
+      }
+
+      .about-content p {
+        font-size: 16px;
+      }
+    }
+{%endblock%}
+{%block body%}
+
+<div class="about-container">
+    <h1 class="about-title">About ProductView</h1>
+    <div class="about-content">
+      <p>
+        <strong>ProductView</strong> is a smart web application designed to help users make informed food choices by simply scanning the barcode of any product. With real-time health analysis, it determines whether a product is healthy or not based on its <span class="highlight">ingredients and nutritional values</span>.
+      </p>
+      <p>
+        Our goal is to empower individuals to lead healthier lifestyles by offering instant feedback and <span class="highlight">comparative analysis</span> when multiple products are scanned. If none are healthy, we’ll let you know – with reasons.
+      </p>
+      <p>
+        Whether you're shopping in a store or checking your pantry, NutriScan is your go-to tool for <span class="highlight">transparent food insights</span>, helping you make better dietary decisions.
+      </p>
+      <p>
+        Start scanning, stay informed, and choose wisely – with NutriScan.
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
+
+
+
