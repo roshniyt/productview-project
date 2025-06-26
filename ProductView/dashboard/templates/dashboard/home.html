@@ -222,7 +222,7 @@ h2{
     {% for i in hero %}
     <div class="container">
         <p>{{i.description}}<br><br>
-       <a href="" class="scan_btn">Start Scan</a> 
+       <a href="{%url 'scan.html' %}" class="scan_btn">Start Scan</a> 
         </p>
          <img src="{{i.image.url}}" class="img-main">
      </div>

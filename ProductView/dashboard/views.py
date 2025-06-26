@@ -23,3 +23,6 @@ def contact_view(request):
 def service_view(request):
     return render(request, 'dashboard/service.html')
 
+def scan_view(request):
+    return render(request, 'dashboard/scan.html')
+
