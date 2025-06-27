@@ -222,7 +222,7 @@ h2{
     {% for i in hero %}
     <div class="container">
         <p>{{i.description}}<br><br>
-       <a href="{%url 'scanV' %}"  class="scan_btn">Start Scan</a> 
+       <a href="{%url 'scanview' %}"  class="scan_btn">Start Scan</a> 
         </p>
          <img src="{{i.image.url}}" class="img-main">
      </div>
@@ -251,7 +251,7 @@ h2{
  
 
  <div class="results">
-  {% comment %} <h2>Sample Results :</h2><br><br> {% endcomment %}
+  <h2>Sample Results :</h2><br><br>
  {% for i in result %}
  
   <div class="card sam_cards " style="width: 18rem;">

@@ -9,6 +9,7 @@ class Product(models.Model):
     calories = models.CharField(max_length=50)
     sugar = models.CharField(max_length=50)
     fat = models.CharField(max_length=50)
+    category = models.CharField(max_length=50,default="")
     image = models.ImageField(upload_to='product_images/', blank=True, null=True)
 
     def __str__(self):

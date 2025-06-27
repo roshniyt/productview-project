@@ -1,2 +1,69 @@
 {%extends "dashboard/basic.html" %}
 {% block title %}Contact Us{% endblock %}
+{%block css%}
+body{
+    margin-top:120px;
+}
+ .scanner-container {
+      max-width: 400px;
+      margin: 50px auto;
+      text-align: center;
+    }
+    .form-control {
+      margin-top: 15px;
+       width:25%;
+    }
+    .btn {
+      margin-top: 20px;
+    }
+
+
+{%endblock%}
+{%block body%}
+<form method="POST">
+  {% csrf_token %}
+  <input type="text" name="barcode" class="form-control" placeholder="Enter barcode manually">
+  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
+
+<!-- Clear Button -->
+<form method="GET">
+  <input type="hidden" name="clear" value="1">
+  <button type="submit" class="btn btn-warning mt-2">Clear All Results</button>
+</form>
+
+{% if error %}
+  <div class="alert alert-danger mt-3">{{ error }}</div>
+{% endif %}
+
+<!-- Show all scanned product cards -->
+<div class="row mt-4">
+  {% for product in scanned_products %}
+    <div class="col-sm-6 col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <strong>{{ product.name }}</strong> (Category: {{ product.category }})
+        </div>
+        <div class="card-body">
+          <img src="{{ product.image }}" alt="Product Image" class="img-fluid mb-3" style="max-width: 200px;">
+          <p><strong>Calories:</strong> {{ product.calories }}</p>
+          <p><strong>Sugar:</strong> {{ product.sugar }}</p>
+          <p><strong>Fat:</strong> {{ product.fat }}</p>
+          <p><strong>Health Status:</strong>
+            {% if product.is_healthy %}
+              <span class="text-success">Healthy ✅</span>
+            {% else %}
+              <span class="text-danger">Unhealthy ❌</span>
+            {% endif %}
+          </p>
+          <p><strong>Reason:</strong> {{ product.reason }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+{%endblock%}
+{%block js%}
+{%endblock%}
