@@ -12,14 +12,22 @@ body{
     .form-control {
       margin-top: 15px;
        width:25%;
+      
     }
+  
     .btn {
       margin-top: 20px;
+    }
+    @media (max-width:768px){
+      .form-control{
+        width:75%;
+      }
     }
 
 
 {%endblock%}
 {%block body%}
+<button type="submit" class="btn btn-success mt-1">Scan Product</button>
 <form method="POST">
   {% csrf_token %}
   <input type="text" name="barcode" class="form-control" placeholder="Enter barcode manually">
