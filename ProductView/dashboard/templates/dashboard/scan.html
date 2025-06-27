@@ -33,8 +33,6 @@ body{
   <input type="text" name="barcode" class="form-control" placeholder="Enter barcode manually">
   <button type="submit" class="btn btn-primary mt-3">Submit</button>
 </form>
-
-<!-- Clear Button -->
 <form method="GET">
   <input type="hidden" name="clear" value="1">
   <button type="submit" class="btn btn-warning mt-2">Clear All Results</button>
@@ -44,7 +42,6 @@ body{
   <div class="alert alert-danger mt-3">{{ error }}</div>
 {% endif %}
 
-<!-- Show all scanned product cards -->
 <div class="row mt-4">
   {% for product in scanned_products %}
     <div class="col-sm-6 col-md-4 mb-4">

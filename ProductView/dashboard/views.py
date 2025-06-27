@@ -51,7 +51,7 @@ def scan_view(request):
                     is_healthy = False
                     reason = "This product is not healthy because it has high calories, sugar, or fat."
 
-                # Prepare a product dict
+                
                 scanned_product = {
                     'name': product.name,
                     'image': product.image.url,
@@ -63,21 +63,17 @@ def scan_view(request):
                     'reason': reason
                 }
 
-                # Add new product to session list
                 scanned_products = request.session['scanned_products']
                 scanned_products.append(scanned_product)
                 request.session['scanned_products'] = scanned_products
 
             except ValueError:
                 context['error'] = "Nutrition values couldn't be processed."
-
         else:
             context['error'] = "No product found with this barcode."
 
-    # CLEAR button clicked → Clear session
     if request.GET.get('clear') == '1':
         request.session['scanned_products'] = []
 
-    # Pass product list to template
     context['scanned_products'] = request.session.get('scanned_products', [])
     return render(request, 'dashboard/scan.html', context)
