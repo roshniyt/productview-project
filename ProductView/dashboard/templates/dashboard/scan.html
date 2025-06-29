@@ -11,6 +11,7 @@ body{
     }
     .form-control {
       margin-top: 15px;
+      margin-left:487px;
        width:25%;
       
     }
@@ -21,55 +22,52 @@ body{
     @media (max-width:768px){
       .form-control{
         width:75%;
+        margin-left:56px;
       }
     }
 
 
 {%endblock%}
-{%block body%}
+{% block body %}
+<div class="container text-center">
+  <h3>Enter Barcode</h3>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="barcode" class="form-control" placeholder="Enter barcode manually">
+    <button type="submit" class="btn btn-primary mt-3">Search</button>
+  </form>
 
-<button type="submit" class="btn btn-success mt-1">Scan Product</button>
-<form method="POST">
-  {% csrf_token %}
-  <input type="text" name="barcode" class="form-control" placeholder="Enter barcode manually">
-  <button type="submit" class="btn btn-primary mt-3">Submit</button>
-</form>
-<form method="GET">
-  <input type="hidden" name="clear" value="1">
-  <button type="submit" class="btn btn-warning mt-2">Clear All Results</button>
-</form>
+  {% if error %}
+    <div class="alert alert-danger mt-4">{{ error }}</div>
+  {% endif %}
 
-{% if error %}
-  <div class="alert alert-danger mt-3">{{ error }}</div>
+  {% if product %}
+  <div class="card mt-5 mx-auto" style="max-width: 400px;">
+    <div class="card-header">
+      <strong>{{ product.name }}</strong> ({{ product.category }})
+    </div>
+    <div class="card-body">
+      <img src="{{ product.image.url }}" alt="Product Image" class="img-fluid mb-3" style="max-width: 200px;">
+      
+      <p><strong>Barcode:</strong> {{ product.barcode }}</p>
+      <p><strong>Calories:</strong> {{ product.calories }}</p>
+      <p><strong>Sugar:</strong> {{ product.sugar }}</p>
+      <p><strong>Fat:</strong> {{ product.fat }}</p>
+      
+      <p><strong>Health Status:</strong>
+        {% if is_healthy %}
+          <span class="text-success">Healthy ✅</span>
+        {% else %}
+          <span class="text-danger">Unhealthy ❌</span>
+        {% endif %}
+      </p>
+      <p><strong>Reason:</strong> {{ reason }}</p>
+    </div>
+  </div>
 {% endif %}
 
-<div class="row mt-4">
-  {% for product in scanned_products %}
-    <div class="col-sm-6 col-md-4 mb-4">
-      <div class="card h-100">
-        <div class="card-header">
-          <strong>{{ product.name }}</strong> (Category: {{ product.category }})
-        </div>
-        <div class="card-body">
-          <img src="{{ product.image }}" alt="Product Image" class="img-fluid mb-3" style="max-width: 200px;">
-          <p><strong>Calories:</strong> {{ product.calories }}</p>
-          <p><strong>Sugar:</strong> {{ product.sugar }}</p>
-          <p><strong>Fat:</strong> {{ product.fat }}</p>
-          <p><strong>Health Status:</strong>
-            {% if product.is_healthy %}
-              <span class="text-success">Healthy ✅</span>
-            {% else %}
-              <span class="text-danger">Unhealthy ❌</span>
-            {% endif %}
-          </p>
-          <p><strong>Reason:</strong> {{ product.reason }}</p>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
+
 </div>
-
-
-{%endblock%}
+{% endblock %}
 {%block js%}
 {%endblock%}
