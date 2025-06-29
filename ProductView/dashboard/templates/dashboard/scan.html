@@ -1,5 +1,5 @@
 {%extends "dashboard/basic.html" %}
-{% block title %}Contact Us{% endblock %}
+{% block title %}Scan{% endblock %}
 {%block css%}
 body{
     margin-top:120px;
@@ -27,6 +27,7 @@ body{
 
 {%endblock%}
 {%block body%}
+
 <button type="submit" class="btn btn-success mt-1">Scan Product</button>
 <form method="POST">
   {% csrf_token %}
