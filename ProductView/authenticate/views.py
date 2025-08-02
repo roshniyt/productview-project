@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import HeroSection 
 from .models import SampleResult
 
@@ -16,10 +17,10 @@ def register_view(request):
         # print(email, username, password1, password2)
        
         if User.objects.filter(username=username).exists():
-            return HttpResponse("Username already exists")
+            messages.error(request, "Username already exists")
 
         if password1 != password2:
-            return HttpResponse("Passwords do not match")
+            messages.error(request, "Passwords do not match")
 
         user = User.objects.create_user(username=username, email=email, password=password1)
         user.save()
@@ -37,7 +38,7 @@ def login_view(request):
                   login(request, user)
                   return redirect('dashboard')
         else:
-             return HttpResponse("Wrong username or password")
+             messages.error(request, "Invalid username or password")
 
 
     return render(request,'authenticate/login.html')
