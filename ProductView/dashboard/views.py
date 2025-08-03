@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from authenticate.models import HeroSection, SampleResult  # adjust model names
+from authenticate.models import HeroSection, SampleResult  
 from .models import Product
 
-@login_required(login_url='login') # Ensure user is logged in to access the dashboard
+@login_required(login_url='login') # To Ensure user is logged in to access the dashboard
 def dashboard_view(request):
     hero = HeroSection.objects.all()
     result = SampleResult.objects.all()
