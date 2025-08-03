@@ -64,7 +64,15 @@
   <body>
     {%  load static %}
     <h1>Register</h1>
-    
+    {% if messages %}
+    <div style="width: 300px; margin-bottom: 15px;">
+      {% for message in messages %}
+        <div style="padding: 10px; color: {% if message.tags == 'success' %}green{% else %}red{% endif %}; border: 1px solid {% if message.tags == 'success' %}green{% else %}red{% endif %}; border-radius: 5px; margin-bottom: 10px;">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
     <div class="container">
         <form method = 'POST'>
           {% csrf_token %}
@@ -80,5 +88,12 @@
             <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
        </form>
     </div>
+{% comment %} for page auto reload after 10 minutes {% endcomment %}
+    <script>
+setTimeout(() => {
+    document.body.onclick = () => location.reload();
+}, 600000); 
+</script>
+
   </body>
 </html>

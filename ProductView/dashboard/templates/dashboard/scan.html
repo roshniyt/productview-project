@@ -69,5 +69,10 @@ body{
 
 </div>
 {% endblock %}
+ <script>
+setTimeout(() => {
+    document.body.onclick = () => location.reload();
+}, 600000); 
+</script>
 {%block js%}
 {%endblock%}

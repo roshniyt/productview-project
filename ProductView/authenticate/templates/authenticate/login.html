@@ -86,5 +86,12 @@
          
         </form>
       </div>
+
+      {% comment %} for page auto reload after 10 minutes {% endcomment %}
+    <script>
+setTimeout(() => {
+    document.body.onclick = () => location.reload();
+}, 600000); 
+</script>
     </body>
   </html>

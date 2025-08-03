@@ -18,9 +18,11 @@ def register_view(request):
        
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
+            return render(request, 'authenticate/register.html')
 
         if password1 != password2:
             messages.error(request, "Passwords do not match")
+            return render(request, 'authenticate/register.html')
 
         user = User.objects.create_user(username=username, email=email, password=password1)
         user.save()
