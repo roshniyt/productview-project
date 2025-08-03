@@ -26,6 +26,7 @@ def register_view(request):
 
         user = User.objects.create_user(username=username, email=email, password=password1)
         user.save()
+        messages.success(request, "Registration successful")
         return redirect('login')
 
     return render(request, 'authenticate/register.html')
