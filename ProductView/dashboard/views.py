@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from authenticate.models import HeroSection, SampleResult  
+from django.http import JsonResponse
 from .models import Product
 
 @login_required(login_url='login') # To Ensure user is logged in to access the dashboard
@@ -57,3 +58,39 @@ def scan_view(request):
             context['error'] = "No product found with this barcode."
 
     return render(request, 'dashboard/scan.html', context)
+
+def check_product(request):
+    print("check_product called", request.GET)
+    code = request.GET.get("code")
+    print(f"Received barcode: {code}")
+    try:
+        product = Product.objects.get(barcode=code)
+        print(f"Product found: {product.name}")
+        # Simple health logic
+        calories = float(product.calories)
+        sugar = float(product.sugar)
+        fat = float(product.fat)
+
+        if calories < 200 and sugar < 10 and fat < 5:
+            is_healthy = True
+            reason = "Low in calories, sugar, and fat — Healthy to consume."
+        else:
+            is_healthy = False
+            reason = "High calories, sugar, or fat — Not healthy."
+
+        return JsonResponse({
+            "status":"success",
+            "product":{
+                "name": product.name,
+                "calories": product.calories,
+                "sugar": product.sugar,
+                "fat": product.fat,
+                "category": product.category,
+                "image": request.build_absolute_uri(product.image.url) if product.image else ""
+            },
+            "is_healthy": is_healthy,
+            "reason": reason
+        })
+
+    except Product.DoesNotExist:
+        return JsonResponse({"status":"error","message":"Product not found"})
