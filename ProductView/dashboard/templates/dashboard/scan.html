@@ -1,170 +1,322 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Product Barcode Scanner</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-    <style>
-      body { 
-    font-family: Arial, sans-serif; 
-    text-align: center; 
-    background: #f9f9f9;
-    margin: 0;
-    padding: 0;
-}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Product Barcode Scanner</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+        <style>
+        body { 
+        font-family: Arial, sans-serif; 
+        text-align: center; 
+        background: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
 
-#scanner { 
-    width: 400px; 
-    height: 300px; 
-    margin: 20px auto; 
-    background: black; 
-    position: relative;
-}
-
+ /* Result always below scanner and centered */
 #result { 
     margin-top: 20px; 
-    font-weight: bold; 
-    min-height: 50px; /* ensures space so card doesn't overlap scanner */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
+/* Card style */
 .card { 
     border: 1px solid #ddd; 
     border-radius: 8px; 
     padding: 15px; 
+    width: 90%;
     max-width: 400px; 
-    margin: 175px 2px 0px; /* extra bottom margin for spacing */
+    margin: 20px auto;  /* ensures center below scanner */
     text-align: center; 
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
     background: #fff;
-    z-index: 1; 
-    position: relative;
 }
 
+/* Image center inside card */
 .card img { 
     max-width: 100px; 
-    margin-bottom: 10px; 
+    margin: 0 auto 10px;
+    display: block;
 }
+h2{
+        margin-top: 115px;
+    }
+    button { 
+        margin: 5px; 
+        padding: 8px 15px; 
+        font-size: 16px; 
+        cursor: pointer; 
+        border: none;
+        border-radius: 5px;
+        background: #007bff;
+        color: white;
+    }
 
-button { 
-    margin: 5px; 
-    padding: 8px 15px; 
-    font-size: 16px; 
-    cursor: pointer; 
-    border: none;
-    border-radius: 5px;
-    background: #007bff;
-    color: white;
-}
+    button:hover {
+        background: #0056b3;
+    }
+    .navbar-brand{
+            font-size: 25px;
+            font-weight: 600;
+            color: #000;
 
-button:hover {
-    background: #0056b3;
-}
+        }
+        
+        .login-btn{
+            background-color:rgb(230, 32, 32);
+            font-size:16px;
+            font-weight:600;
+            color:white;
+            border: none;
+            padding:8px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition:0.3s background-color;
 
-    </style>
-</head>
-<body>
-    <h2>Product Barcode Scanner</h2>
+        }
+        .login-btn:hover{
+            background-color:rgb(180, 12, 12);
+            text-decoration: none;
+        }
+        .navbar-toggler {
+            border: none;
+            font-size: 1.25rem;
+        }
+        .navbar-toggler:focus, .btn-close{
+            box-shadow: none;
+            outline: none;
+        }
+        .nav-link{
+            color:#666777;
+            font-weight: 600;
+            position: relative;
+            font-size: 18px;
 
-    <div>
-        <button onclick="startScan()">Start Scan</button>
-        <button onclick="stopScan()">Stop Scan</button>
+        }
+        .nav-link:hover, nav-link.active{
+            color: #000;
+        }
+        @media (min-width:991px){ 
+        .nav-link::before{
+            content:"";
+            position: absolute;
+            width: 0;
+            height: 2px;
+        background-color:rgb(26, 193, 165);
+            bottom: 0;
+            left: 50%;
+            visibility: hidden;
+            transform: translateX(-50%);
+            transition:  0.3s ease-in-out;
+        }
+        .nav-link:hover::before{
+            width: 100%;
+            visibility: visible;
+
+        }
+        #scanner {
+        display: block;
+        margin: 0 auto;
+    }
+    #result {
+        margin-top: 12px; /* just below scanner */
+    }
+        .card{
+        justify-content:baseline;
+        }
+        
+    }
+    .navbar{
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);}
+        
+
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand me-auto" href="{%url 'dashboard'%}">ProductView</a>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{%url 'dashboard'%}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'about'%}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'contact'%}">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'service'%}">Services</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+        <a href="{% url 'logout' %}" class="login-btn">Logout </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
+    </nav>
+    {% comment %} end navbar  {% endcomment %}
+        <h2></h2>
 
-    <div id="scanner"></div>
-    <div id="result">No product scanned</div>
+        <div>
+            <button onclick="startScan()">Start Scan</button>
+            <button onclick="stopScan()">Stop Scan</button>
+        </div>
 
-    <script>
-        let lastDetectedCode = null;
-        let lastDetectedTime = 0;
-        let scanning = false;
-        let processing = false;
+        <div id="scanner"></div>
+        <div id="result">No product scanned</div>
+    {% load static %}
 
-        function startScan() {
-            if(scanning) return;
-            scanning = true;
-            lastDetectedCode = null;
-            lastDetectedTime = 0;
-            processing = false;
+    {% block content %}
+    <div class="container mt-5 pt-5 text-center">
+        <h2>Manual Product Check</h2>
 
-            Quagga.init({
-                inputStream: {
-                    name: "Live",
-                    type: "LiveStream",
-                    target: document.querySelector('#scanner'),
-                    constraints: { width: 640, height: 480, facingMode: "environment" }
-                },
-                locator: { patchSize: "medium", halfSample: true },
-                numOfWorkers: navigator.hardwareConcurrency || 4,
-                decoder: { readers: ["ean_reader","code_128_reader"] },
-                locate: true
-            }, function(err) {
-                if(err){ console.error(err); return; }
-                Quagga.start();
-                document.getElementById("result").innerHTML = "<p style='color:green;'>Scanner started...</p>";
-            });
+        <!-- Manual Barcode Entry Form -->
+        <form method="POST" class="mt-3" style="max-width:400px; margin:auto;">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="barcode" class="form-control" placeholder="Enter barcode manually" required>
+                <button class="btn btn-primary" type="submit">Check</button>
+            </div>
+        </form>
 
-            Quagga.onDetected(onDetectedHandler);
-        }
+        <!-- Show error message -->
+        {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
 
-        function stopScan() {
-            if(scanning){
-                Quagga.stop();
-                scanning = false;
+        <!-- Show product card if found -->
+        {% if product %}
+        <div class="card mt-4 shadow" style="max-width:400px; margin:auto;">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p><b>Calories:</b> {{ product.calories }}</p>
+                <p><b>Sugar:</b> {{ product.sugar }}</p>
+                <p><b>Fat:</b> {{ product.fat }}</p>
+                <p><b>Category:</b> {{ product.category }}</p>
+
+                {% if is_healthy %}
+                <p class="text-success fw-bold">{{ reason }}</p>
+                {% else %}
+                <p class="text-danger fw-bold">{{ reason }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+
+        <script>
+            let lastDetectedCode = null;
+            let lastDetectedTime = 0;
+            let scanning = false;
+            let processing = false;
+
+            function startScan() {
+                if(scanning) return;
+                scanning = true;
+                lastDetectedCode = null;
+                lastDetectedTime = 0;
                 processing = false;
-                document.getElementById("result").innerHTML += "<p style='color:red;'>Scanner stopped</p>";
+
+                Quagga.init({
+                    inputStream: {
+                        name: "Live",
+                        type: "LiveStream",
+                        target: document.querySelector('#scanner'),
+                        constraints: { width: 640, height: 480, facingMode: "environment" }
+                    },
+                    locator: { patchSize: "medium", halfSample: true },
+                    numOfWorkers: navigator.hardwareConcurrency || 4,
+                    decoder: { readers: ["ean_reader","code_128_reader"] },
+                    locate: true
+                }, function(err) {
+                    if(err){ console.error(err); return; }
+                    Quagga.start();
+                    document.getElementById("result").innerHTML = "<p style='color:green;'>Scanner started...</p>";
+                });
+
+                Quagga.onDetected(onDetectedHandler);
             }
-        }
 
-        function onDetectedHandler(data) {
-            const now = Date.now();
-            const code = data.codeResult.code;
-
-            if(processing) return;
-
-            if(code !== lastDetectedCode || (now - lastDetectedTime > 1000)){
-                lastDetectedCode = code;
-                lastDetectedTime = now;
-                processing = true;
-
-                document.getElementById("result").innerHTML = `<p style='color:blue;'>Barcode scanned: ${code}<br>Checking product...</p>`;
-
-                checkProduct(code).finally(() => { processing = false; });
+            function stopScan() {
+                if(scanning){
+                    Quagga.stop();
+                    scanning = false;
+                    processing = false;
+                    document.getElementById("result").innerHTML += "<p style='color:red;'>Scanner stopped</p>";
+                }
             }
-        }
 
-        async function checkProduct(code){
-            try {
-                const url = "{% url 'check_product' %}?code=" + code;
-            console.log(`Checking product with barcode: ${code} at ${url}`);
-            
-            const response = await fetch(url);
-                const data = await response.json();
+            function onDetectedHandler(data) {
+                const now = Date.now();
+                const code = data.codeResult.code;
 
-                if(data.status === "success"){
-                    const p = data.product;
-                    document.getElementById("result").innerHTML = `
-                        <p style="color:green;">Scan successful!</p>
-                        <div class="card">
-                            ${p.image ? `<img src="${p.image}" alt="${p.name}">` : ""}
-                            <h3>${p.name}</h3>
-                            <p><b>Calories:</b> ${p.calories}</p>
-                            <p><b>Sugar:</b> ${p.sugar}</p>
-                            <p><b>Fat:</b> ${p.fat}</p>
-                            <p><b>Category:</b> ${p.category}</p>
-                            <p style="color:${data.is_healthy ? 'green':'red'};">
-                                ${data.reason}
-                            </p>
-                        </div>`;
-                } else {
-                    document.getElementById("result").innerHTML = `<p style="color:red;">Product not found! Scanning stopped.</p>`;
+                if(processing) return;
+
+                if(code !== lastDetectedCode || (now - lastDetectedTime > 1000)){
+                    lastDetectedCode = code;
+                    lastDetectedTime = now;
+                    processing = true;
+
+                    document.getElementById("result").innerHTML = `<p style='color:blue;'>Barcode scanned: ${code}<br>Checking product...</p>`;
+
+                    checkProduct(code).finally(() => { processing = false; });
+                }
+            }
+
+            async function checkProduct(code){
+                try {
+                    const url = "{% url 'check_product' %}?code=" + code;
+                console.log(`Checking product with barcode: ${code} at ${url}`);
+                
+                const response = await fetch(url);
+                    const data = await response.json();
+
+                    if(data.status === "success"){
+                        const p = data.product;
+                        document.getElementById("result").innerHTML = `
+                            <p style="color:green;">Scan successful!</p>
+                            <div class="card">
+                                ${p.image ? `<img src="${p.image}" alt="${p.name}">` : ""}
+                                <h3>${p.name}</h3>
+                                <p><b>Calories:</b> ${p.calories}</p>
+                                <p><b>Sugar:</b> ${p.sugar}</p>
+                                <p><b>Fat:</b> ${p.fat}</p>
+                                <p><b>Category:</b> ${p.category}</p>
+                                <p style="color:${data.is_healthy ? 'green':'red'};">
+                                    ${data.reason}
+                                </p>
+                            </div>`;
+                    } else {
+                        document.getElementById("result").innerHTML = `<p style="color:red;">Product not found! Scanning stopped.</p>`;
+                        stopScan();
+                    }
+                } catch(err) {
+                    console.error(err);
+                    document.getElementById("result").innerHTML = `<p style="color:red;">Error checking product! Scanning stopped.</p>`;
                     stopScan();
                 }
-            } catch(err) {
-                console.error(err);
-                document.getElementById("result").innerHTML = `<p style="color:red;">Error checking product! Scanning stopped.</p>`;
-                stopScan();
             }
-        }
-    </script>
-</body>
-</html>
+        </script>
+
+    </body>
+    </html>
