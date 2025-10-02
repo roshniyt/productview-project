@@ -43,7 +43,7 @@ def scan_view(request):
                 return render(request, 'dashboard/scan.html', context)
 
           
-            if calories < 200 and sugar < 10 and fat < 5:
+            if calories < 200 and sugar < 10 and fat < 10:
                 is_healthy = True
                 reason = "Low in calories, sugar, and fat —  Healthy To Consume."
             else:
@@ -71,7 +71,7 @@ def check_product(request):
         sugar = float(product.sugar)
         fat = float(product.fat)
 
-        if calories < 200 and sugar < 10 and fat < 5:
+        if calories < 200 and sugar < 10 and fat < 10:
             is_healthy = True
             reason = "Low in calories, sugar, and fat — Healthy to consume."
         else:
