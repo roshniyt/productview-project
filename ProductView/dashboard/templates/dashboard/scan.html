@@ -190,7 +190,7 @@ h2{
         <form method="POST" class="mt-3" style="max-width:400px; margin:auto;">
             {% csrf_token %}
             <div class="input-group">
-                <input type="text" name="barcode" class="form-control" placeholder="Enter barcode manually" required>
+                <input type="text" name="barcode" class="form-control" placeholder="Enter barcode Number" required>
                 <button class="btn btn-primary" type="submit">Check</button>
             </div>
         </form>
@@ -208,9 +208,9 @@ h2{
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{ product.name }}</h5>
-                <p><b>Calories:</b> {{ product.calories }}</p>
-                <p><b>Sugar:</b> {{ product.sugar }}</p>
-                <p><b>Fat:</b> {{ product.fat }}</p>
+                <p><b>Calories:</b> {{ product.calories }}Kcal</p>
+                <p><b>Sugar:</b> {{ product.sugar }}g</p>
+                <p><b>Fat:</b> {{ product.fat }}g</p>
                 <p><b>Category:</b> {{ product.category }}</p>
 
                 {% if is_healthy %}
@@ -299,9 +299,9 @@ h2{
                             <div class="card">
                                 ${p.image ? `<img src="${p.image}" alt="${p.name}">` : ""}
                                 <h3>${p.name}</h3>
-                                <p><b>Calories:</b> ${p.calories}</p>
-                                <p><b>Sugar:</b> ${p.sugar}</p>
-                                <p><b>Fat:</b> ${p.fat}</p>
+                                <p><b>Calories:</b> ${p.calories}Kcal</p>
+                                <p><b>Sugar:</b> ${p.sugar}g</p>
+                                <p><b>Fat:</b> ${p.fat}g</p>
                                 <p><b>Category:</b> ${p.category}</p>
                                 <p style="color:${data.is_healthy ? 'green':'red'};">
                                     ${data.reason}
